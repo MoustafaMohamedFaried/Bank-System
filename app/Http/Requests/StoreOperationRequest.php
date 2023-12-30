@@ -26,8 +26,6 @@ class StoreOperationRequest extends FormRequest
             "amount" => "required|numeric",
         ];
     }
-<<<<<<< HEAD
-=======
     public function messages(): array
     {
         return [
@@ -37,5 +35,4 @@ class StoreOperationRequest extends FormRequest
             "amount.numeric" => "Please enter amount numric",
         ];
     }
->>>>>>> ed0092336b6b3f5c387a33db2611af09bdbc9bc3
 }
