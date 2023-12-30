@@ -26,4 +26,16 @@ class StoreOperationRequest extends FormRequest
             "amount" => "required|numeric",
         ];
     }
+<<<<<<< HEAD
+=======
+    public function messages(): array
+    {
+        return [
+            "operation_name.required" => "Please choose the operation type",
+
+            "amount.required" => "Please enter amount",
+            "amount.numeric" => "Please enter amount numric",
+        ];
+    }
+>>>>>>> ed0092336b6b3f5c387a33db2611af09bdbc9bc3
 }

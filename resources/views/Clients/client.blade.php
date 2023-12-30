@@ -71,16 +71,33 @@
 
                                 <div class="mb-3">
                                     <label for="amount" class="col-form-label">Amount</label>
+<<<<<<< HEAD
                                     <input type="text" class="form-control" id="amount" name="amount">
+=======
+                                    <input type="text" class="form-control @error('amount') is-invalid @enderror" id="amount" name="amount">
+                                    @error('amount')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+>>>>>>> ed0092336b6b3f5c387a33db2611af09bdbc9bc3
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="operation_name" class="col-form-label">Operation</label>
+<<<<<<< HEAD
                                     <select class="form-control" name="operation_name" id="operation_name">
+=======
+                                    <select class="form-control @error('operation_name') is-invalid @enderror" name="operation_name" id="operation_name">
+>>>>>>> ed0092336b6b3f5c387a33db2611af09bdbc9bc3
                                         <option disabled selected value>Choose Operation</option>
                                         <option value="put_money">Put Money</option>
                                         <option value="take_money">Take Money</option>
                                     </select>
+<<<<<<< HEAD
+=======
+                                    @error('operation_name')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+>>>>>>> ed0092336b6b3f5c387a33db2611af09bdbc9bc3
                                 </div>
 
                                 <div class="modal-footer">
