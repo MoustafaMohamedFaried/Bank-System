@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\RegisterRequestMail;
 use App\Models\Operations;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
 {
@@ -104,7 +106,7 @@ class AdminController extends Controller
     public function register_requests()
     {
         //? just seeing users (not admins) , status 2 (waiting)
-        $users = User::where('role_id',2)->paginate(5);
+        $users = User::where('role_id',2)->where('status',2)->paginate(5);
         return view('Admins.register_requests',compact('users'));
     }
 
@@ -116,6 +118,8 @@ class AdminController extends Controller
         $user -> update([
             "status" => 3
         ]);
+
+        Mail::to($user->email)->send(new RegisterRequestMail($user));
 
         return redirect()->route("admins.show_users");
     }
@@ -129,6 +133,9 @@ class AdminController extends Controller
             "status" => 1
         ]);
 
+        Mail::to($user->email)->send(new RegisterRequestMail($user));
+
         return redirect()->route("admins.show_users");
     }
+
 }
