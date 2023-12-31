@@ -17,26 +17,24 @@ class UserController extends Controller
 
     public function index()
     {
-        if(Auth::user()->status == 3)
+        if(Auth::user()->status == 3 || Auth::user()->status == 1) //* when user is active or not
         {
             $users = User::where('id',Auth::user()->id)->paginate(5);
             return view('Clients.client',compact('users'));
         }
-        else
+        else //* when user is in waiting
             return view("home");
     }
 
     public function operations(StoreOperationRequest $request)
     {
-        if(Auth::user()->status == 3)
+        if(Auth::user()->status == 3 || Auth::user()->status == 1) //* when user is active or not
         {
-            if($request->operation_name == "take_money"){
+            $userAmount = $request->user()->amount;
 
-                $userAmount = $request->user()->amount;
+            if($request->operation_name == "take_money" && $request->amount > $userAmount){
 
-                if ($request->amount > $userAmount) {
-                    return redirect()->route('users.index')->withErrors(['amount' => "Can't taking money over than your balance"]);
-                }
+                return redirect()->route('users.index')->withErrors(['amount' => "Can't taking money over than your balance"]);
             }
 
             else{
@@ -50,7 +48,7 @@ class UserController extends Controller
                 return redirect()->route('users.index');
             }
         }
-        else
+        else //* when user is in waiting
             return view("home");
     }
 }
