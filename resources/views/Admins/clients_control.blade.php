@@ -12,6 +12,23 @@
             <div class="card">
                 <div class="card-header">
                     Clients
+                    <div class="btn-group" role="group">
+
+                        {{--Todos: Sort button --}}
+                        <a class="btn btn-warning" role="button" href="{{ route('admins.sort') }}">Sort</a>
+
+                        {{--Todos: Search section --}}
+                        <form action="{{ route('admins.search') }}" method="post">
+                            @csrf
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search with name or e-mail" name="search">
+                                <button class="btn btn-info" type="submit">Search</button>
+                            </div>
+                        </form>
+
+
+                    </div>
+
                 </div>
 
                 <div class="card-body">

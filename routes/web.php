@@ -39,14 +39,16 @@ Route::controller(UserController::class)->group(function ()
 
 Route::controller(AdminController::class)->group(function ()
 {
+    //! control on users (active & disactive) and (search & sort) routes
+    Route::get('/admins', 'show_users')->name('admins.show_users');
+    Route::put('/admins/activation_users/{id}', 'activation_users')->name('admins.activation_users');
+    Route::get('/admins/sort', 'sort')->name('admins.sort');
+    Route::post('/admins/search', 'search')->name('admins.search');
+
     //! control on operation requests (put & take money) routes
-    Route::get('/admins', 'operations')->name('admins.operations');
+    Route::get('/admins/operations', 'operations')->name('admins.operations');
     Route::put('/admins/accept_operations/{id}', 'accept_operations')->name('admins.accept_operations');
     Route::put('/admins/refuse_operations/{id}', 'refuse_operations')->name('admins.refuse_operations');
-
-    //! control on users (active & disactive) routes
-    Route::get('/admins/users', 'show_users')->name('admins.show_users');
-    Route::put('/admins/activation_users/{id}', 'activation_users')->name('admins.activation_users');
 
     //! control on register_requests (accept & refuse) routes
     Route::get('/admins/register_requests', 'register_requests')->name('admins.register_requests');

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Mail\RegisterRequestMail;
 use App\Models\Operations;
 use App\Models\User;
+use Illuminate\Http\Client\Request;
+use Illuminate\Http\Request as HttpRequest;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
@@ -100,6 +103,20 @@ class AdminController extends Controller
             ]);
         }
         return redirect()->route("admins.show_users");
+    }
+
+    public function sort()
+    {
+        $users = User::orderBy('name')->where('role_id',2)->paginate(5);
+        return view("Admins.clients_control",compact("users"));
+    }
+    public function search(HttpRequest $request)
+    {
+        $search_value = $request->search;
+        $users = DB::table('users')->where('name', 'LIKE', '%'.$search_value.'%')
+            ->orWhere('email', 'LIKE', '%'.$search_value.'%')
+            ->paginate(5);
+        return view("Admins.clients_control",compact("users"));
     }
 
     //Todos: this function for letting admin seeing users for control on them (active,not-active)
