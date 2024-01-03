@@ -21,7 +21,7 @@ class AdminController extends Controller
     //Todos: this function for letting admin seeing operations request
     public function operations()
     {
-        $operations = Operations::with('user')->paginate(5);
+        $operations = Operations::with('user')->orderBy('created_at','desc')->paginate(5);
         return view('Admins.operations',compact('operations'));
     }
 
