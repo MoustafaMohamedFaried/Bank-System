@@ -17,18 +17,24 @@ class UserController extends Controller
 
     public function index()
     {
-        if(Auth::user()->status == 3 || Auth::user()->status == 1) //* when user is active or not
+        if(Auth::user()->status == 3) //* when user is active
         {
             $users = User::where('id',Auth::user()->id)->paginate(5);
             return view('Clients.client',compact('users'));
         }
-        else //* when user is in waiting
+        elseif(Auth::user()->status == 2){ //* when user is in waiting or not-active
             return view("home");
+        }
+        elseif (Auth::user()->status == 1 && Auth::user()->role_id == 2) {
+            // User has status 1 and role_id 2, log them out
+            auth()->logout();
+            return redirect()->route('login')->with('status', 'You have been logged out.');
+        }
     }
 
     public function operations(StoreOperationRequest $request)
     {
-        if(Auth::user()->status == 3 || Auth::user()->status == 1) //* when user is active or not
+        if(Auth::user()->status == 3) //* when user is active
         {
             $userAmount = $request->user()->amount;
 
@@ -48,7 +54,7 @@ class UserController extends Controller
                 return redirect()->route('users.index');
             }
         }
-        else //* when user is in waiting
+        else //* when user is in waiting or not-active
             return view("home");
     }
 }

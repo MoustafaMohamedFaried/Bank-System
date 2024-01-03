@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        if(Auth::user()->role_id == 2 && Auth::user()->status == 1) //? if user isn't admin and not-active
+        {
+            auth()->logout();
+            return redirect()->route('login');
+        }
+        else
+            return view('home');
     }
 }

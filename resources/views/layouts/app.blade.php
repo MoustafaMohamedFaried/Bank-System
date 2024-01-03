@@ -35,6 +35,27 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
+
+
+                        @auth
+                            @if (Auth::user()->role_id == 1) {{--? if user is admin --}}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('admins.register_requests') }}">Register Requests</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('admins.show_users') }}">Clients Control</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('admins.operations') }}">Operations</a>
+                                </li>
+                            @elseif (Auth::user()->role_id ==2) {{--? if user isn't admin --}}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('users.index') }}">Account</a>
+                                </li>
+                            @endif
+                        @endauth
+
+
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))

@@ -23,9 +23,9 @@
                         <a class="btn btn-warning" href="{{ route('admins.show_users') }}" role="button">Clients Control</a>
                         <a class="btn btn-success" href="{{ route('admins.operations') }}" role="button">Operations</a>
                     @else
-                        @if (Auth::user()->status == 3 || Auth::user()->status == 1)
+                        @if (Auth::user()->status == 3) {{--? if user is active --}}
                             <a class="btn btn-primary" href="{{ route('users.index') }}" role="button">Your Account</a>
-                        @else
+                        @elseif (Auth::user()->status == 2) {{--? if user is in waiting list --}}
                             <h1 style="text-align: center; color: blue">
                                 Your account is in waiting list to activate
                             </h1>
