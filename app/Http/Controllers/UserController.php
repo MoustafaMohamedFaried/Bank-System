@@ -25,10 +25,10 @@ class UserController extends Controller
         elseif(Auth::user()->status == 2){ //* when user is in waiting or not-active
             return view("home");
         }
+        //? if user isn't admin and not-active log him out & send session (disactivate)
         elseif (Auth::user()->status == 1 && Auth::user()->role_id == 2) {
-            // User has status 1 and role_id 2, log them out
             auth()->logout();
-            return redirect()->route('login')->with('status', 'You have been logged out.');
+            return redirect()->route('login')->with('disactivate', 'Cant not login, your account has been disactive.');
         }
     }
 
@@ -51,10 +51,15 @@ class UserController extends Controller
                     "status" => 2 //! 1=> not-active , 2=> waiting , 3=> active
                 ]);
 
-                return redirect()->route('users.index');
+                return redirect()->route('users.index')->with("Add","Request sended succefully");
             }
         }
-        else //* when user is in waiting or not-active
+        elseif(Auth::user()->status == 2){ //* when user is in waiting list
             return view("home");
+        }
+        else{ //? if user isn't admin and not-active log him out & send session (disactivate)
+            return redirect()->route('login')->with('disactivate', 'Cant not login, your account has been disactive.');
+        }
+
     }
 }

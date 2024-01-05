@@ -7,6 +7,22 @@
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
 
+                {{--Todos: alert to telling user his account is not-active & can't login --}}
+                @if (session()->has('disactivate'))
+                    <div class="alert alert-danger" role="alert">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-11">
+                                    <strong>{{ session()->get('disactivate') }}</strong>
+                                </div>
+                                <div class="col-1">
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf

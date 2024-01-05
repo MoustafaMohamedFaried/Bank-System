@@ -24,10 +24,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if(Auth::user()->role_id == 2 && Auth::user()->status == 1) //? if user isn't admin and not-active
+        //? if user isn't admin and not-active log him out & send session (disactivate)
+        if(Auth::user()->role_id == 2 && Auth::user()->status == 1)
         {
             auth()->logout();
-            return redirect()->route('login');
+            return redirect()->route('login')->with('disactivate', 'Cant not login, your account has been disactive.');
         }
         else
             return view('home');

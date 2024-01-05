@@ -14,6 +14,41 @@
                     Your Bank account
                 </div>
 
+                {{--Todos: showing error messages --}}
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-11">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                <div class="col-1">
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                {{--Todos: showing add (session) message --}}
+                @elseif (session()->has('Add'))
+                    <div class="alert alert-success" role="alert">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-11">
+                                    <strong>{{ session()->get('Add') }}</strong>
+                                </div>
+                                <div class="col-1">
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+
                 <div class="card-body">
                     <table class="table table-hover">
                         @php $x = 0 @endphp
@@ -71,22 +106,16 @@
 
                                 <div class="mb-3">
                                     <label for="amount" class="col-form-label">Amount</label>
-                                    <input type="text" class="form-control @error('amount') is-invalid @enderror" id="amount" name="amount">
-                                    @error('amount')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
+                                    <input type="text" class="form-control" id="amount" name="amount">
                                 </div>
 
                                 <div class="mb-3">
                                     <label for="operation_name" class="col-form-label">Operation</label>
-                                    <select class="form-control @error('operation_name') is-invalid @enderror" name="operation_name" id="operation_name">
+                                    <select class="form-control" name="operation_name" id="operation_name">
                                         <option disabled selected value>Choose Operation</option>
                                         <option value="put_money">Put Money</option>
                                         <option value="take_money">Take Money</option>
                                     </select>
-                                    @error('operation_name')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
                                 </div>
 
                                 <div class="modal-footer">
